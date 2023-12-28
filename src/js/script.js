@@ -4,6 +4,8 @@ const bookTemplateSource = document.getElementById('template-book').innerHTML;
 const bookTemplate = Handlebars.compile(bookTemplateSource);
 const booksList = document.querySelector('.books-list');
 const bookFilters = document.querySelector('.filters');
+const favoriteBooks = [];
+const filters = [];
 
 function render(){
   for(const book of dataSource.books){
@@ -14,8 +16,25 @@ function render(){
   console.log('Wywołano funkcję: render');
 }
 
-const favoriteBooks = [];
-const filters = [];
+function filterBooks(){
+  for(const book of dataSource.books){
+    let shouldBeHidden = false;
+    for(const filter of filters){
+      if(!book.details[filter]){
+        shouldBeHidden = true;
+        break;
+      }
+    }
+    const bookImage = document.querySelector(`.book__image[data-id="${book.id}"]`);
+    if (bookImage){
+      if(shouldBeHidden){
+        bookImage.classList.add('hidden');
+      }else{
+        bookImage.classList.remove('hidden');
+      }
+    }
+  }
+}
 
 function initActions(){
 
@@ -51,8 +70,9 @@ function initActions(){
           filters.splice(index, 1);
         }
       }
-      console.log('Tablica filters:', filters);
     }
+    console.log('Tablica filters:', filters);
+    filterBooks();
   });
 }
 
