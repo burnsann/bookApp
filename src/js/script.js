@@ -3,6 +3,7 @@
 const bookTemplateSource = document.getElementById('template-book').innerHTML;
 const bookTemplate = Handlebars.compile(bookTemplateSource);
 const booksList = document.querySelector('.books-list');
+const bookFilters = document.querySelector('.filters');
 
 function render(){
   for(const book of dataSource.books){
@@ -14,6 +15,7 @@ function render(){
 }
 
 const favoriteBooks = [];
+const filters = [];
 
 function initActions(){
 
@@ -31,6 +33,25 @@ function initActions(){
         favoriteBooks.splice(index, 1);
       }
       console.log('Zawartość tablicy z ulubionymi książkami:', favoriteBooks);
+    }
+  });
+
+  bookFilters.addEventListener('click', function(event){
+    if(event.target.tagName === 'INPUT' && event.target.type === 'checkbox' && event.target.name === 'filter'){
+      const filterValue = event.target.value;
+      console.log(filterValue);
+
+      if(event.target.checked){
+        if(!filters.includes(filterValue)){
+          filters.push(filterValue);
+        }
+      }else{
+        const index = filters.indexOf(filterValue);
+        if(index !== -1){
+          filters.splice(index, 1);
+        }
+      }
+      console.log('Tablica filters:', filters);
     }
   });
 }
