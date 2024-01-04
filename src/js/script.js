@@ -108,8 +108,8 @@ class BooksList{
     const thisBooksList = this;
 
     for(const book of thisBooksList.data){
-      const ratingBgc = thisBooksList.determineRatingBgc(book.rating);
-      const ratingWidth = book.rating * 10;
+      book.ratingBgc = thisBooksList.determineRatingBgc(book.rating);
+      book.ratingWidth = book.rating * 10;
       const html = thisBooksList.bookTemplate(book);
       const bookElement = utils.createDOMFromHTML(html);
       thisBooksList.booksList.appendChild(bookElement);
